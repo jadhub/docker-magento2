@@ -4,7 +4,7 @@ MAINTAINER Fu Cheng <alexcheng1982@gmail.com>
 
 RUN a2enmod rewrite
 
-ENV MAGENTO_VERSION 2.0.5
+ENV MAGENTO_VERSION 2.1
 
 RUN rm -rf /var/www/html/*
 RUN cd /tmp && curl https://codeload.github.com/magento/magento2/tar.gz/$MAGENTO_VERSION -o $MAGENTO_VERSION.tar.gz && tar xvf $MAGENTO_VERSION.tar.gz && mv magento2-$MAGENTO_VERSION/* magento2-$MAGENTO_VERSION/.htaccess /var/www/html
@@ -49,8 +49,11 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www/html
 
+RUN mkdir -p /var/www/projectdata
+
 VOLUME /var/www/html/var
 VOLUME /var/www/html/pub
+VOLUME /var/www/html/projectdata
 
 # Add cron job
 ADD ./data/crontab /etc/cron.d/magento2-cron
